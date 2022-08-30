@@ -17,8 +17,5 @@ pub fn start_sudoloop() {
 }
 
 fn prompt_sudo() -> bool {
-    while ShellCommand::sudo().arg("-v").wait_success().is_err() {
-        return true;
-    }
-    return false;
+    ShellCommand::sudo().arg("-v").wait_success().is_err()
 }
