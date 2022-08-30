@@ -130,7 +130,8 @@ fn finish(cachedir: &str, pkg: &str, options: &Options) {
                 "-cO",
                 "extglob",
                 format!(
-                    "sudo pacman -U --asdeps {}/!({})/*.pkg.tar.* {}",
+                    "{} pacman -U --asdeps {}/!({})/*.pkg.tar.* {}",
+                    config::read().bin.sudo.unwrap_or_default(),
                     cachedir,
                     pkg,
                     if options.noconfirm { "--noconfirm" } else { "" }

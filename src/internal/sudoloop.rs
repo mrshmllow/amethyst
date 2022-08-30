@@ -8,11 +8,18 @@ use crate::ShellCommand;
 pub fn start_sudoloop() {
     prompt_sudo();
     std::thread::spawn(|| loop {
-        prompt_sudo();
+        if prompt_sudo() {
+            // Sudo prompt returned error
+            break;
+        }
+
         thread::sleep(Duration::from_secs(3 * 60));
     });
 }
 
-fn prompt_sudo() {
-    while ShellCommand::sudo().arg("-v").wait_success().is_err() {}
+fn prompt_sudo() -> bool {
+    while ShellCommand::sudo().arg("-v").wait_success().is_err() {
+        return true;
+    }
+    return false;
 }

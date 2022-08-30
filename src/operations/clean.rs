@@ -3,6 +3,7 @@ use std::process::Command;
 use crate::crash;
 use crate::info;
 use crate::internal::commands::ShellCommand;
+use crate::internal::config;
 use crate::internal::error::SilentUnwrap;
 use crate::internal::exit_code::AppExitCode;
 use crate::log;
@@ -108,7 +109,7 @@ pub fn clean(options: Options) {
         }
 
         // Clear pacman's cache (keeping latest 3 versions of installed packages)
-        Command::new("sudo")
+        Command::new(config::read().bin.sudo.unwrap_or_default())
             .arg("paccache")
             .args(paccache_args)
             .spawn()

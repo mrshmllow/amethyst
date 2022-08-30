@@ -53,7 +53,7 @@ impl ShellCommand {
     }
 
     pub fn sudo() -> Self {
-        Self::new("sudo")
+        Self::new(&config::read().bin.sudo.unwrap_or_default())
     }
 
     fn new(command: &str) -> Self {
@@ -129,7 +129,7 @@ impl ShellCommand {
             (Stdio::inherit(), Stdio::inherit())
         };
         let child = if self.elevated {
-            Command::new("sudo")
+            Command::new(&config::read().bin.sudo.unwrap_or_default())
                 .arg(self.command)
                 .args(self.args)
                 .stdout(stdout)

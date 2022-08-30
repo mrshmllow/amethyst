@@ -9,6 +9,7 @@ use crate::{crash, AppExitCode};
 pub struct Config {
     pub base: ConfigBase,
     pub extra: ConfigExtra,
+    pub bin: ConfigBin,
 }
 
 #[derive(Debug, Deserialize)]
@@ -25,6 +26,11 @@ pub struct ConfigExtra {
     pub review_user_shell: bool,
 }
 
+#[derive(Debug, Deserialize)]
+pub struct ConfigBin {
+    pub sudo: Option<String>,
+}
+
 impl Default for Config {
     fn default() -> Self {
         Self {
@@ -37,6 +43,9 @@ impl Default for Config {
                 uwu: None,
                 uwu_debug: None,
                 review_user_shell: false,
+            },
+            bin: ConfigBin {
+                sudo: Some("sudo".to_string()),
             },
         }
     }

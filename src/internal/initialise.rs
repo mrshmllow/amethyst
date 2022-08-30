@@ -63,6 +63,9 @@ powerpill = false
 
 [extra]
 review_user_shell = false
+
+[bin]
+sudo = \"sudo\"
 ";
 
     if !Path::new(&format!("{}/.config/ame/config.toml", homedir)).exists() {
